@@ -1,2 +1,2 @@
-# Lescription
+# Description
 > Docker, Laravel, MariaDB
