@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.2-debian-10
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=projects
+      - MARIADB_DATABASE=projects
+      - MARIADB_PASSWORD=projects
+    container_name: mariadb
+
+  laravelproject:
+    tty: true
+    image: docker.io/bitnami/laravel:8-debian-10
+    environment:
+      - DB_HOST=mariadb
+      - DB_USERNAME=projects
+      - DB_DATABASE=projects
+      - DB_PASSWORD=projects
+    depends_on:
+      - mariadb
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app
+    container_name: laravelproject
+    privileged: true # Privileged mode could be required to run this container under Windows
